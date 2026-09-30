@@ -1802,11 +1802,9 @@ function s1ScoreAll(questions, answers) {
     render(
       '<header class="brand"><i></i>THE COMMUNITY</header>' +
       '<main style="flex:1">' +
-        '<p class="eyebrow" style="margin-top:34px">YOUR COORDINATE · 第 1 季 01</p>' +
         '<div class="card rcard">' +
           '<div class="rcard__top">' +
-            avatarSVG() +
-            '<div class="rcard__who">' +
+              '<div class="rcard__who">' +
               '<span class="rcard__name">' + (name ? esc(name) + " 的结果" : "你的结果") + '</span>' +
               '<strong class="rcard__code">' + res.code + '</strong>' +
               '<span class="rcard__sub">思想验证区域 · 四轴坐标</span>' +
