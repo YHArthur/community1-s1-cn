@@ -91,7 +91,32 @@ details p{color:#b6b6be;font-size:13.4px;line-height:1.85;white-space:pre-line;m
 .row{display:flex;gap:12px;margin-top:20px}
 .row .btn{flex:1;margin-top:0}
 .sending{font-size:13px;color:var(--dim);margin-top:14px;text-align:center}
-@media(max-width:520px){.meta{gap:22px}.track b{width:16px;height:16px;top:-5px}}
+/* ===== 官方结果卡 ===== */
+.rcard{margin-top:14px;padding:22px 20px 0}
+.rcard__top{display:flex;gap:16px;align-items:center}
+.avatar{width:76px;height:76px;flex:0 0 auto}
+.rcard__who{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rcard__name{font-size:13px;color:#a8a8b0}
+.rcard__code{font-size:clamp(28px,7.4vw,38px);letter-spacing:.06em;color:#fff;line-height:1.1}
+.rcard__sub{font-size:11px;color:#70707a;letter-spacing:.12em}
+.rcard__axes{list-style:none;margin:20px 0 0;padding:0}
+.rcard__axis{padding:16px 0;border-top:1px solid var(--line)}
+.axrow{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.side{display:flex;flex-direction:column;gap:1px;font-size:13px;color:#7d7d86;min-width:0}
+.side--r{align-items:flex-end;text-align:right}
+.side small{font-size:9.5px;letter-spacing:.12em;color:#6e6e78}
+.side b{font-weight:700;letter-spacing:.02em}
+.side b.on{color:inherit}
+.axname{font-style:normal;font-size:12px;color:#6e6e78;letter-spacing:.1em;flex:0 0 auto}
+.axfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:700}
+.lv{font-size:15px;font-weight:800;letter-spacing:.04em}
+.lv em{font-style:normal;font-size:10px;color:var(--dim);margin-left:5px;letter-spacing:.1em;font-weight:600}
+.rcard__total{display:flex;align-items:baseline;gap:10px;justify-content:flex-end;border-top:1px solid var(--line);margin-top:4px;padding:16px 0 18px}
+.rcard__total span{font-size:12px;letter-spacing:.22em;color:var(--dim)}
+.rcard__total strong{font-size:30px;line-height:1;letter-spacing:.04em}
+.rcard__total em{font-style:normal;font-size:12px;color:#70707a}
+@media(max-width:520px){.axis__labels{gap:10px}.track b{width:16px;height:16px;top:-5px}}
 </style>
 </head>
 <body>
@@ -1446,32 +1471,32 @@ var S1_QUESTIONS = [
   ]
  }
 ];
-/* ===== 社区1《思想验证区域》计分内核（与官方客户端契约一致） =====
-   官方 /api/v1/results 在服务器端计算，bundle 内不含该函数；
-   客户端可见契约（season-one-result 组件，bundle @283589-291500）为：
-     resultType 形如 "L1F2W3O4"，每条轴 = 一个字母 + 一位数字(1..6)
-     字母：L/R=政治(좌파/우파) F/E=性别(페미/이퀄) W/U=阶级(서민/부유) O/C=开放性(개방/전통)
-     数字 1..3 = 左侧档位，4..6 = 右侧档位
-     强度 CS(d) = d<=3 ? 4-d : d-3  → 1..3 档
-   因此本内核把「1..6 的轴位置」定义为各题（已按反向标记定向）在左右轴上的
-   归一化均值映射：mean∈[0,1] (0=最左 1=最右) → digit = round(1 + mean*5)，clamp 1..6。
+/* ===== 社区1《思想验证区域》计分内核 =====
+   官方计分在服务器端（bundle 无源码）。客户端可见契约（season-one-result 组件，
+   bundle @283589-291500）：
+     - 每条轴 = 一个字母 + 一个数字：L/R 政治、F/E 性别、W/U 阶级、O/C 开放性
+     - 字母决定左右两端；数字 4 位档位(1..6)，且 = 该轴在左右轴上的位置
+     - 强度 CS(d)= d<=3 ? 4-d : d-3，即结果为「左/右 + 1..3 级」
+     - 颜色按 6 位档位取（L1..L3 / R4..R6 …）
+   官方结果卡（主人提供的 13 张样本 OCR）显示的是「字母 + 1..3 级」+ TOTAL 合计：
+     - 如 R2 F1 U3 O2，TOTAL = 四轴等级之和（4..12）
+   即：卡片等级 = CS(档位)，TOTAL = 四轴等级之和。
 */
 
 var S1_AXES = [
   { group: "politics", title: "政治", leftCode: "L", rightCode: "R", leftZh: "左派", rightZh: "右派", leftEn: "LEFT", rightEn: "RIGHT" },
   { group: "gender",   title: "性别", leftCode: "F", rightCode: "E", leftZh: "女性主义", rightZh: "平等主义", leftEn: "FEMINISM", rightEn: "EQUALISM" },
-  { group: "class",    title: "阶级", leftCode: "W", rightCode: "U", leftZh: "平民", rightZh: "富裕", leftEn: "WORKING", rightEn: "UPPER-MIDDLE" },
-  { group: "openness", title: "开放性", leftCode: "O", rightCode: "C", leftZh: "开放", rightZh: "传统", leftEn: "OPEN MINDED", rightEn: "CONSERVATIVE" }
+  { group: "class",    title: "阶级", leftCode: "W", rightCode: "U", leftZh: "劳动者", rightZh: "中上阶层", leftEn: "WORKING", rightEn: "UPPER MIDDLE" },
+  { group: "openness", title: "开放性", leftCode: "O", rightCode: "C", leftZh: "开放", rightZh: "保守", leftEn: "OPEN MINDED", rightEn: "CONSERVATIVE" }
 ];
 
+/* 官方配色：键 = 字母 + 6 位档位 */
 var S1_COLORS = {
   L1: "#FF7719", L2: "#E38859", L3: "#B69687", R4: "#507C7E", R5: "#009095", R6: "#00A3AA",
   F1: "#FF000A", F2: "#CE333B", F3: "#8B5758", E4: "#426371", E5: "#006E9A", E6: "#007AC2",
   W1: "#D30000", W2: "#98000C", W3: "#5B2C2D", U4: "#27374B", U5: "#003B75", U6: "#003D9F",
   O1: "#FF3C43", O2: "#DB5D5F", O3: "#A27777", C4: "#8C9BA7", C5: "#72A0C3", C6: "#52A5DF"
 };
-
-function s1AxisInfo(axes, group) { return axes.filter(function (a) { return a.group === group; })[0]; }
 
 function s1AxisMean(qs, answers) {
   var sum = 0, n = 0;
@@ -1486,37 +1511,45 @@ function s1AxisMean(qs, answers) {
   return sum / n;
 }
 
+/* mean(0=最左,1=最右) → 6 等分档位 1..6（官方客户端契约） */
 function s1DigitFromMean(mean) {
   var m = Math.min(1, Math.max(0, mean));
-  return Math.min(6, Math.floor(m * 6) + 1); /* 等宽 6 档：0~1/6→1 … 5/6~1→6 */
+  return Math.min(6, Math.floor(m * 6) + 1);
 }
 
+/* 6 位档位 → 1..3 级（官方 CS()） */
 function s1Strength(digit) { return digit <= 3 ? 4 - digit : digit - 3; }
 
 function s1ScoreAll(questions, answers) {
-  var out = { axes: [], code: "" };
+  var out = { axes: [] };
   for (var i = 0; i < S1_AXES.length; i++) {
     var ax = S1_AXES[i];
     var qs = questions.filter(function (q) { return q.group === ax.group; });
     var mean = s1AxisMean(qs, answers);
     var digit = s1DigitFromMean(mean);
     var left = digit <= 3;
-    var code = left ? ax.leftCode : ax.rightCode;
-    var token = code + digit;
+    var letter = left ? ax.leftCode : ax.rightCode;
+    var level = s1Strength(digit);            /* 1..3 级（官方卡片显示值） */
     out.axes.push({
-      group: ax.group, title: ax.title, digit: digit, token: token,
+      group: ax.group, title: ax.title,
+      digit: digit,                            /* 1..6 官方档位 */
+      level: level,                            /* 1..3 官方卡片等级 */
+      token: letter + level,                   /* 卡片代码，如 R2 / L3 */
+      token6: letter + digit,                  /* 6 位档位代码，如 R5 / L1 */
       side: left ? "left" : "right",
       label: left ? ax.leftZh : ax.rightZh,
       labelEn: left ? ax.leftEn : ax.rightEn,
-      oppositeZh: left ? ax.rightZh : ax.leftZh,
-      strength: s1Strength(digit),
-      color: S1_COLORS[token] || "#B2B2B2",
+      leftZh: ax.leftZh, rightZh: ax.rightZh, leftEn: ax.leftEn, rightEn: ax.rightEn,
+      strength: level,
+      color: S1_COLORS[letter + digit] || "#B2B2B2",
       mean: mean,
       leftPercent: Math.round((1 - mean) * 100),
       rightPercent: Math.round(mean * 100)
     });
   }
-  out.code = out.axes.map(function (a) { return a.token; }).join("");
+  out.code = out.axes.map(function (a) { return a.token; }).join("");       /* R2F1U3O2 */
+  out.code6 = out.axes.map(function (a) { return a.token6; }).join("");     /* 官方 6 位档位串 */
+  out.total = out.axes.reduce(function (s, a) { return s + a.level; }, 0);  /* 4..12 */
   out.byGroup = {};
   out.axes.forEach(function (a) { out.byGroup[a.group] = a; });
   return out;
@@ -1662,63 +1695,49 @@ function s1ScoreAll(questions, answers) {
   function prev() { if (idx > 0) { idx--; screenQuestion(); } }
 
   /* ---------- 屏幕 4：结果 ---------- */
-  function symbolSVG(res) {
-    var g = res.byGroup;
-    var pol = g.politics, gen = g.gender, cls = g.class, opn = g.openness;
-    var rayColor = pol.side === "left" ? "#790000" : "#002E4B";
-    var rays = "";
-    for (var k = 0; k < 11; k++) {
-      var a = Math.PI * (k / 10) - Math.PI / 2 + Math.PI; /* 0..PI */
-      var x1 = 98.55 + Math.cos(a) * 14, y1 = 97.8 + Math.sin(a) * 14;
-      var x2 = 98.55 + Math.cos(a) * 92, y2 = 97.8 + Math.sin(a) * 92;
-      var xm = 98.55 + Math.cos(a) * 132, ym = 97.8 + Math.sin(a) * 132;
-      if (k % 5 === 2) { /* 中间一条：直接指向上方，带箭头 */ }
-      rays += '<line x1="' + x1.toFixed(2) + '" y1="' + y1.toFixed(2) + '" x2="' + xm.toFixed(2) + '" y2="' + ym.toFixed(2) + '" stroke="' + rayColor + '" stroke-width="1.7" opacity="0.55"/>' +
-        '<path d="M' + xm.toFixed(2) + ' ' + ym.toFixed(2) + ' l-4.6 -7.2 l9.2 0 z" fill="' + rayColor + '" opacity="0.55"/>';
-    }
-    return '' +
-      '<svg class="symbol" viewBox="0 0 197 276" role="img" aria-label="思想验证区域结果图形">' +
-        '<clipPath id="topArc"><path d="M98.55 0h-.04C44.51.02.75 43.8.75 97.8h195.6C196.35 43.79 152.56 0 98.55 0Z"/></clipPath>' +
-        '<path d="M98.55 0h-.04C44.51.02.75 43.8.75 97.8h195.6C196.35 43.79 152.56 0 98.55 0Z" fill="' + pol.color + '"/>' +
-        '<g clip-path="url(#topArc)">' + rays + '</g>' +
-        '<path d="M196.37 97.77H.74v23.15h195.63V97.77Z" fill="' + gen.color + '"/>' +
-        '<g opacity="0.5"><path d="M196.37 97.77H.74v23.15h195.63V97.77Z" fill="#000" opacity="0.28"/></g>' +
-        '<path d="M98.55 120.97H98.53H.74V198.4H196.36V120.97H98.55Z" fill="' + cls.color + '"/>' +
-        '<g opacity="0.5"><path d="M.74 198.3H196.34V192.44V121.06" fill="#000" opacity="0.35"/></g>' +
-        '<path d="M196.36 275.64V198.2L.74 198.22V275.64H196.36Z" fill="' + opn.color + '"/>' +
-        '<g opacity="0.5">' +
-          '<path d="M196.36 275.64H98.54V249.57H131.96V224.95H164.13V198.2H196.36" fill="#000" opacity="0.3"/>' +
-          '<circle cx="49.64" cy="236.92" r="29.8" fill="#000" opacity="0.3"/>' +
-        '</g>' +
-      '</svg>';
+  function avatarSVG() {
+    return '<svg class="avatar" viewBox="0 0 96 96" aria-hidden="true">' +
+      '<defs><linearGradient id="avg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a2a30"/><stop offset="1" stop-color="#141417"/></linearGradient></defs>' +
+      '<rect x="0" y="0" width="96" height="96" rx="20" fill="url(#avg)"/>' +
+      '<circle cx="48" cy="38" r="15" fill="#3d3d46"/>' +
+      '<path d="M18 88c4-16 15-24 30-24s26 8 30 24z" fill="#3d3d46"/>' +
+      '<rect x="0" y="0" width="96" height="96" rx="20" fill="none" stroke="#2b2b31"/>' +
+    '</svg>';
   }
 
   function axisRow(a) {
-    var pos = 50 + (a.side === "left" ? -1 : 1) * (a.strength / 3) * 50;
-    return '<li class="axis">' +
-      '<div class="axis__head">' +
-        '<div class="axis__labels"><span><small>' + a.leftEn + '</small><b>' + a.leftZh + '</b></span>' +
-        '<span style="color:#6e6e78">' + a.title + '</span>' +
-        '<span><small>' + a.rightEn + '</small><b>' + a.rightZh + '</b></span></div>' +
+    var pos = 50 + (a.side === "left" ? -1 : 1) * (a.level / 3) * 47;
+    var on = function (side) { return a.side === side ? " side--on" : ""; };
+    var onColor = a.side === "left" ? "left" : "right";
+    return '<li class="rcard__axis">' +
+      '<div class="axrow">' +
+        '<span class="side" style="' + (onColor === "left" ? "color:" + a.color : "") + '"><small>' + a.leftEn + '</small><b class="' + (onColor === "left" ? "on" : "") + '">' + a.leftZh + '</b></span>' +
+        '<em class="axname">' + a.title + '</em>' +
+        '<span class="side side--r" style="' + (onColor === "right" ? "color:" + a.color : "") + '"><small>' + a.rightEn + '</small><b class="' + (onColor === "right" ? "on" : "") + '">' + a.rightZh + '</b></span>' +
       '</div>' +
-      '<div class="track"><i></i><b style="left:' + pos + '%;background:' + a.color + '"></b></div>' +
-      '<div class="axis__head" style="margin-top:10px"><span class="axis__pick" style="color:' + a.color + '">' + a.label + ' ' + a.strength + ' 档 <em>(' + a.token + ')</em></span>' +
-      '<span style="font-size:12px;color:#70707a">左 ' + a.leftPercent + '% / 右 ' + a.rightPercent + '%</span></div>' +
+      '<div class="track"><i></i><b style="left:' + pos.toFixed(1) + '%;background:' + a.color + '"></b></div>' +
+      '<div class="axfoot">' +
+        '<span class="chip" style="border-color:' + a.color + ';color:' + a.color + '">' + a.label + ' · ' + a.level + ' 级</span>' +
+        '<span class="lv" style="color:' + a.color + '">' + a.token + '<em>L' + a.level + '</em></span>' +
+      '</div>' +
     '</li>';
   }
 
   function resultLines(res) {
     var now = new Date(), pad = function (n) { return String(n).padStart(2, "0"); };
     var ts = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) + " " + pad(now.getHours()) + ":" + pad(now.getMinutes());
-    var mk = function (a) { return a.label + " " + a.strength + " 档（" + a.token + "，左 " + a.leftPercent + "% / 右 " + a.rightPercent + "%）"; };
+    var mk = function (a) {
+      return a.label + " " + a.level + " 级（" + a.token + "；6 位档位 " + a.token6 + "，左 " + a.leftPercent + "% / 右 " + a.rightPercent + "%）";
+    };
     return {
       "昵称": name || "未填写",
       "完成时间": ts,
       "结果代码": res.code,
+      "TOTAL": String(res.total) + " / 12",
       "政治维度（左派↔右派）": mk(res.byGroup.politics),
       "性别维度（女性主义↔平等主义）": mk(res.byGroup.gender),
-      "阶级维度（平民↔富裕）": mk(res.byGroup.class),
-      "开放性维度（开放↔传统）": mk(res.byGroup.openness),
+      "阶级维度（劳动者↔中上阶层）": mk(res.byGroup.class),
+      "开放性维度（开放↔保守）": mk(res.byGroup.openness),
       "页面": "社区1 思想验证区域 中文版（surge）"
     };
   }
@@ -1783,12 +1802,22 @@ function s1ScoreAll(questions, answers) {
     render(
       '<header class="brand"><i></i>THE COMMUNITY</header>' +
       '<main style="flex:1">' +
-        '<p class="eyebrow" style="margin-top:34px">YOUR COORDINATE</p>' +
-        '<div class="card" style="margin-top:14px">' +
-          '<div class="summary"><span style="font-size:13px;color:#a8a8b0">' + (name ? esc(name) + " 的结果" : "你的结果") + '</span>' +
-          '<strong style="color:#fff">' + res.code + '</strong></div>' +
-          symbolSVG(res) +
-          '<ol style="list-style:none;margin:0;padding:0">' + res.axes.map(axisRow).join("") + '</ol>' +
+        '<p class="eyebrow" style="margin-top:34px">YOUR COORDINATE · 第 1 季 01</p>' +
+        '<div class="card rcard">' +
+          '<div class="rcard__top">' +
+            avatarSVG() +
+            '<div class="rcard__who">' +
+              '<span class="rcard__name">' + (name ? esc(name) + " 的结果" : "你的结果") + '</span>' +
+              '<strong class="rcard__code">' + res.code + '</strong>' +
+              '<span class="rcard__sub">思想验证区域 · 四轴坐标</span>' +
+            '</div>' +
+          '</div>' +
+          '<ol class="rcard__axes">' + res.axes.map(axisRow).join("") + '</ol>' +
+          '<div class="rcard__total">' +
+            '<span>TOTAL</span>' +
+            '<strong>' + String(res.total).padStart(2, "0") + '</strong>' +
+            '<em>/ 12</em>' +
+          '</div>' +
         '</div>' +
         '<div class="notices">' + RESULT_NOTICES.map(function (t) { return "<p>" + t + "</p>"; }).join("") + '</div>' +
         '<section class="guide"><h2>各区域是如何测量的？</h2>' +
@@ -1803,7 +1832,7 @@ function s1ScoreAll(questions, answers) {
     );
     document.getElementById("again").onclick = function () { idx = 0; answers = {}; screenIntro(); };
     document.getElementById("copy").onclick = function () {
-      var txt = "我在《思想验证区域》中文版的结果：" + res.code + " —— " + res.axes.map(function (a) { return a.title + "：" + a.label + a.strength + "档"; }).join("，");
+      var txt = "我在《思想验证区域》中文版的结果：" + res.code + "（TOTAL " + res.total + "/12）—— " + res.axes.map(function (a) { return a.title + "：" + a.label + a.level + "级"; }).join("，");
       var done = document.getElementById("copy");
       var p = navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject();
       p.then(function () { done.textContent = "已复制 ✓"; }).catch(function () {
