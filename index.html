@@ -1,0 +1,1839 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#080808">
+<meta name="robots" content="index,follow">
+<title>思想验证区域 — 中文版 | The Community 第 1 季</title>
+<meta name="description" content="平等与市场、女性主义与传统、开放与秩序。已有 156 万人以上参与的思想验证测试中文版，87 题，含完整结果报告。">
+<meta property="og:title" content="思想验证区域 — 中文版">
+<meta property="og:description" content="平等与市场、女性主义与传统、开放与秩序。你以为是常识的东西，究竟位于何方？">
+<meta property="og:type" content="website">
+<style>
+:root{
+  --bg:#080808; --panel:#111112; --line:#26262a; --fg:#f2f2f3; --dim:#9a9aa1;
+  --accent:#1646f5; --red:#FF3C43; --blue:#52A5DF;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:28px 22px 64px;min-height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;font-size:13px;color:#fff}
+.brand i{display:inline-block;width:9px;height:9px;background:var(--accent);border-radius:2px}
+.eyebrow{font-size:12px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
+h1{font-size:clamp(30px,7.6vw,52px);line-height:1.06;margin:16px 0 0;letter-spacing:-.01em}
+.dek{color:#c9c9d0;font-size:15.5px;line-height:1.75;margin:18px 0 0;max-width:34em}
+.axes{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
+.axes span{border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;color:#dcdce2}
+.meta{display:flex;gap:34px;margin:26px 0 0}
+.meta dt{font-size:12px;letter-spacing:.14em;color:var(--dim);margin-bottom:4px}
+.meta dd{margin:0;font-size:26px;font-weight:800}
+.btn{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:var(--fg);color:#0a0a0a;border:0;border-radius:14px;padding:18px 20px;font-weight:800;font-size:16px;
+  cursor:pointer;transition:transform .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--fg);border:1px solid var(--line);font-weight:600}
+.btn--sm{margin-top:0;padding:13px 16px;font-size:14px;border-radius:11px}
+.notices{margin:22px 0 0;display:grid;gap:9px}
+.notices p{margin:0;font-size:12.6px;line-height:1.7;color:#a8a8b0}
+.notices strong{color:#fff}
+.field{width:100%;background:#141416;border:1px solid var(--line);border-radius:12px;padding:15px 16px;font-size:16px;outline:none}
+.field:focus{border-color:#4a4a52}
+.hint{font-size:12.5px;color:var(--dim);margin:9px 0 0}
+.qtop{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--dim);letter-spacing:.1em}
+.bar{height:3px;background:#1d1d20;border-radius:2px;margin:14px 0 0;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--fg);transition:width .26s ease}
+.qmeta{display:flex;align-items:center;justify-content:space-between;margin:34px 0 0;font-size:12px;color:var(--dim);letter-spacing:.16em}
+.qbody{position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;padding:34px 0}
+.ghost{position:absolute;right:-6px;top:6px;font-size:clamp(72px,20vw,132px);font-weight:800;color:#131315;line-height:1;pointer-events:none;user-select:none}
+.qtext{font-size:clamp(21px,4.6vw,29px);line-height:1.5;font-weight:700;margin:0;position:relative;z-index:1}
+.qtext b{color:var(--dim);font-weight:800;margin-right:6px}
+.scale{display:flex;gap:8px;margin:38px 0 0}
+.scale button{flex:1;background:#131315;border:1px solid var(--line);border-radius:12px;padding:14px 0 12px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .1s ease,border-color .15s ease}
+.scale button:hover{transform:translateY(-3px);border-color:#454550}
+.scale button.sel{border-color:#fff;background:#1c1c20}
+.scale .dot{width:16px;height:16px;border-radius:50%;background:#3a3a42}
+.scale .num{font-size:13px;font-weight:700;color:#c4c4cc}
+.tags{display:flex;gap:8px;margin:9px 0 0;font-size:11.5px;color:var(--dim)}
+.tags span{flex:1;text-align:center;line-height:1.4}
+.qfoot{display:flex;gap:12px;margin-top:26px}
+.err{color:#ff8080;font-size:13px;margin:14px 0 0}
+.track{position:relative;height:6px;background:#1d1d20;border-radius:4px;margin:13px 0 0}
+.track i{position:absolute;left:50%;top:0;bottom:0;width:1px;background:#3a3a42}
+.track b{position:absolute;top:-6px;width:18px;height:18px;border-radius:50%;transform:translateX(-50%);border:2px solid #0a0a0a}
+.axis{padding:20px 0;border-top:1px solid var(--line)}
+.axis__head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.axis__labels{display:flex;gap:14px;align-items:baseline;font-size:12px;color:var(--dim)}
+.axis__labels b{display:block;font-size:14px;color:var(--fg);letter-spacing:.02em}
+.axis__labels small{display:block;font-size:9.5px;letter-spacing:.1em;color:#6e6e78}
+.axis__pick{font-size:13px;font-weight:800;text-align:right}
+.axis__pick em{font-style:normal;color:var(--dim);font-weight:600}
+.summary{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.summary strong{font-size:clamp(30px,8vw,46px);letter-spacing:.06em}
+.symbol{display:block;width:min(240px,62vw);margin:26px auto 6px}
+.guide{margin:40px 0 0}
+.guide h2{font-size:17px;margin:0 0 12px}
+details{border-top:1px solid var(--line);padding:14px 0}
+details summary{cursor:pointer;font-weight:700;font-size:14.5px;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"＋";float:right;color:var(--dim)}
+details[open] summary::after{content:"－"}
+details p{color:#b6b6be;font-size:13.4px;line-height:1.85;white-space:pre-line;margin:12px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px 22px}
+.foot{margin-top:26px;font-size:12px;color:#70707a;line-height:1.8}
+.foot a{color:#9a9aa1}
+.center{text-align:center}
+.row{display:flex;gap:12px;margin-top:20px}
+.row .btn{flex:1;margin-top:0}
+.sending{font-size:13px;color:var(--dim);margin-top:14px;text-align:center}
+@media(max-width:520px){.meta{gap:22px}.track b{width:16px;height:16px;top:-5px}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script>
+/* ===== 数据（官方题序：Ks("season-1") 确定性洗牌） ===== */
+var S1_QUESTIONS = [
+ {
+  "id": "s1-class-15",
+  "group": "class",
+  "ko": "어린 시절 과외를 받아본 적 있다",
+  "zh": "小时候上过课外辅导。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-gender-07",
+  "group": "gender",
+  "ko": "‘여배우’, ‘여류시인’, ‘여기자’ 등 직업 앞에 성별을 붙이는 것은 여성의 가치를 평가 절하하는 방법 중 하나다.",
+  "zh": "在「女演员」「女诗人」「女记者」这类职业前加上性别，是贬低女性价值的方式之一。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-01",
+  "group": "politics",
+  "ko": "일을 했으면 성과와 무관하게 최소한의 소득은 보장받아야 한다.",
+  "zh": "只要工作了，不管业绩如何，都应保障最低限度的收入。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-04",
+  "group": "gender",
+  "ko": "정부는 기업 임원 등 남성 중심의 고소득 직종에 대한 여성 할당제를 시행해야 한다.",
+  "zh": "政府应在企业高管等以男性为主的高收入岗位上实行女性配额制。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-20",
+  "group": "openness",
+  "ko": "장애인들이 바쁜 출퇴근 시간에까지 피해를 끼치며 시위하는 것은 동의할 수 없다.",
+  "zh": "残障人士在通勤高峰时段妨碍他人地进行示威，我无法认同。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-09",
+  "group": "class",
+  "ko": "나 또는 가족의 병원비가 부족해 비참했던 경험이 있다",
+  "zh": "曾因自己或家人的医药费不足而感到凄惨。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-gender-19",
+  "group": "gender",
+  "ko": "남자들과 비교했을 때 여자들은 안정적인 인간관계 없이 행복하기 어렵다.",
+  "zh": "与男性相比，女性若没有稳定的人际关系就很难幸福。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-12",
+  "group": "politics",
+  "ko": "나는 모든 사람들이 비슷한 월급을 받게 하는 나라에서는 살고 싶지 않다.",
+  "zh": "我不想生活在一个所有人收入都差不多的国家。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-09",
+  "group": "politics",
+  "ko": "수입품에 대한 관세는 자국의 일자리를 보호하는 좋은 방법이다.",
+  "zh": "对进口商品征收关税是保护本国就业的好办法。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-12",
+  "group": "openness",
+  "ko": "다수를 위해 소수가 희생하고 따르는 것이 민주주의의 원칙이다.",
+  "zh": "少数为多数牺牲并服从，这是民主的原则。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-05",
+  "group": "openness",
+  "ko": "방송의 수어해설화면은 농인의 권리를 위한 당연한 조치이므로 지금보다 더 큰 사이즈로, 모든 방송에 나와야 한다.",
+  "zh": "电视的手语解说画面是为聋人权利采取的当然措施，应以更大的尺寸出现在所有节目中。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-16",
+  "group": "politics",
+  "ko": "자본주의는 그 어떤 경제 시스템보다 우월하다.",
+  "zh": "资本主义优于任何其他经济体制。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-13",
+  "group": "class",
+  "ko": "스트레스가 쌓이면 쇼핑으로 푸는 편이다",
+  "zh": "压力累积时，倾向于靠购物来排解。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-gender-01",
+  "group": "gender",
+  "ko": "여성들이 보건휴가(생리휴가)를 주말에 붙여 쓰는 것은 정당한 권리행사이므로 비난할 수 없다.",
+  "zh": "女性把生理假接在周末前后使用是正当行使权利，不该受到指责。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-18",
+  "group": "politics",
+  "ko": "경쟁은 일반적으로 세상을 더 좋게 만든다.",
+  "zh": "竞争通常会让世界变得更好。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-19",
+  "group": "openness",
+  "ko": "미국의 흑인 차별은 어느 정도 정당한 근거가 있다.",
+  "zh": "美国对黑人的歧视有一定的正当理由。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-14",
+  "group": "politics",
+  "ko": "정부가 민간사업에 개입하면 대부분 망친다고 봐야 한다.",
+  "zh": "政府介入民间事业，大多只会搞砸。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-20",
+  "group": "gender",
+  "ko": "페미니즘을 지지하는 남성은 남자답지 못한 구석이 있는 게 사실이다.",
+  "zh": "支持女性主义的男性，确实有不那么「男人」的一面。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-17",
+  "group": "gender",
+  "ko": "임금의 성별 격차는 근거 없는 믿음이다. 여성은 이미 같은 노동에 대해 남성과 동등한 보수를 받는다.",
+  "zh": "工资的性别差距是没有根据的迷信。女性在同等劳动下已经获得与男性相同的报酬。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-05",
+  "group": "gender",
+  "ko": "정부는 공직의 일정 비율을 여성에게 할당해야 한다.",
+  "zh": "政府应将一定比例的公共职位分配给女性。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-07",
+  "group": "class",
+  "ko": "어떤 종류든 저소득층을 위한 지원금을 받은 적이 있다",
+  "zh": "曾领过任何一种面向低收入群体的补助。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-08",
+  "group": "class",
+  "ko": "학창 시절 가정형편 때문에 식비나 학비를 면제받은 적이 있다",
+  "zh": "上学时曾因家境困难减免过餐费或学费。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-01",
+  "group": "class",
+  "ko": "물건을 구입할 때 가장 중요한 기준은 가성비이다",
+  "zh": "买东西时最重要的标准是性价比。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-21",
+  "group": "openness",
+  "ko": "디즈니는 인어공주 실사영화에 흑인을 캐스팅함으로써 원작의 추억을 간직한 팬들을 배신했다.",
+  "zh": "迪士尼在真人版《小美人鱼》中起用黑人演员，背叛了怀念原作的粉丝。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-06",
+  "group": "politics",
+  "ko": "고액의 사교육은 규제되어야 한다.",
+  "zh": "高价课外补习应当受到管制。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-17",
+  "group": "class",
+  "ko": "성인이 되기 전 해외여행을 자주 다녔다",
+  "zh": "成年之前经常出国旅行。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-10",
+  "group": "openness",
+  "ko": "독재 정부에 대한 저항일지라도 폭력은 용인되어서는 안 된다.",
+  "zh": "即便针对独裁政府的抵抗，也不应容忍暴力。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-01",
+  "group": "openness",
+  "ko": "동성 커플은 결혼과 입양 권리 등 이성 커플과 동일한 권리를 누려야 한다.",
+  "zh": "同性伴侣应享有与异性伴侣相同的结婚、收养等权利。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-02",
+  "group": "politics",
+  "ko": "거주가 아닌 투기 목적의 부동산 구입 행위는 규제되어야 한다.",
+  "zh": "以投机（而非居住）为目的购买房产的行为应受到管制。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-04",
+  "group": "openness",
+  "ko": "조선족이 범죄를 저지를 확률이 높다고 느끼는 것은 편견에 사로잡힌 잘못된 생각이다.",
+  "zh": "觉得朝鲜族犯罪概率更高，是被偏见左右的错误想法。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-21",
+  "group": "politics",
+  "ko": "납세자의 세금이 순수예술을 진흥하는 것에 사용되어서는 안 된다.",
+  "zh": "纳税人的税款不应用于扶持纯艺术。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-17",
+  "group": "openness",
+  "ko": "한국 사회에 온 이주민은 우리 문화에 동화시키는 것이 좋다.",
+  "zh": "来到韩国社会的移民，最好同化进我们的文化。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-11",
+  "group": "openness",
+  "ko": "“절이 싫으면 중이 떠나야지”라는 말은 대부분의 경우 옳다.",
+  "zh": "「不喜欢这座寺庙，和尚就该离开」这句话在大多数情况下是对的。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-03",
+  "group": "class",
+  "ko": "최대한 물건을 싸게 구입하기 위해 할인쿠폰이나 중고거래를 활용하는 등 시간과 노력을 아끼지 않는다",
+  "zh": "为了尽量便宜地买东西，不惜花时间精力使用优惠券或二手交易。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-05",
+  "group": "class",
+  "ko": "성인이 된 후에는 부모의 존재가 경제적 부담이 된다",
+  "zh": "成年之后，父母的存在成了经济负担。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-20",
+  "group": "class",
+  "ko": "대학 등록금은 늘 부모님이 내주셨다",
+  "zh": "大学学费一直由父母承担。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-03",
+  "group": "openness",
+  "ko": "무슬림이 많은 지역이라면 이슬람 율법에 따른 할랄 음식 인증제를 지자체가 지원해 줄 필요가 있다.",
+  "zh": "在穆斯林聚居的地区，地方政府有必要支持按伊斯兰教法设立的清真食品认证制度。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-21",
+  "group": "gender",
+  "ko": "여성이 우울증과 같은 정신질환을 호소할 때는 엄살인 경우가 많다.",
+  "zh": "女性主诉抑郁等精神疾病时，很多时候是在装病。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-14",
+  "group": "openness",
+  "ko": "대중매체에 긍정적인 성소수자 캐릭터가 자주 등장하는 것은 소수자 가시화를 위한 좋은 방법이다.",
+  "zh": "大众媒体中经常出现正面的性少数角色，是让少数群体被看见的好方法。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-11",
+  "group": "politics",
+  "ko": "자유시장에 맡기는 게 정부정책을 세우는 것보다 낫다.",
+  "zh": "交给自由市场，比政府制定政策更好。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-02",
+  "group": "openness",
+  "ko": "모든 식당은 가급적 채식주의자를 위한 메뉴를 하나 이상 제공해야 한다.",
+  "zh": "所有餐厅都应尽量提供至少一道素食菜品。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-16",
+  "group": "gender",
+  "ko": "출산을 하지 않는 여성에겐 세금을 더 부과해야한다.",
+  "zh": "应当对不生育的女性征收更高的税。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-11",
+  "group": "gender",
+  "ko": "여성 모델이 속옷이나 수영복을 입고 찍는 섹시화보는 그동안 성취해 온 여성인권을 후퇴시킨다.",
+  "zh": "女模特穿内衣或泳装拍摄的性感写真，会让迄今争取到的女性人权倒退。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-06",
+  "group": "openness",
+  "ko": "숨길 것이 없는 떳떳한 사람에게는 정부의 감시가 오히려 그를 보호해주는 수단이 된다.",
+  "zh": "对于没有什么可隐瞒的光明正大之人，政府监控反而是保护他的手段。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-04",
+  "group": "politics",
+  "ko": "정부는 CEO들의 임금에 상한선을 정해야 한다.",
+  "zh": "政府应为 CEO 的薪酬设定上限。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-10",
+  "group": "gender",
+  "ko": "데이트와 섹스에 대한 주류 문화의 규범은 남성의 욕구를 만족시키기 위한 가부장제를 기반으로 하고 있다.",
+  "zh": "关于约会与性的主流文化规范，建立在以满足男性欲望为目的的父权制之上。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-08",
+  "group": "gender",
+  "ko": "남자와 여자가 같은 직업에 같은 연봉을 받고 있다면 실은 여자가 더 유능할 것이다.",
+  "zh": "如果男女在同一职位拿到同样的年薪，实际上女性可能更有能力。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-16",
+  "group": "openness",
+  "ko": "세상은 확실히 더 안 좋은 방향으로 변하고 있다.",
+  "zh": "世界确实正朝着更糟的方向变化。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-19",
+  "group": "class",
+  "ko": "부모님은 지금도 종종 휴가를 해외로 떠나신다",
+  "zh": "父母现在也常常去海外度假。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-politics-15",
+  "group": "politics",
+  "ko": "빈곤의 책임은 기본적으로 본인에게 있다.",
+  "zh": "贫困的责任基本上在于本人。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-15",
+  "group": "gender",
+  "ko": "오늘날 한국 사회에서 여자로 산다는 것은 남자로 사는 것보다 더 편한 점이 많다.",
+  "zh": "如今在韩国，作为女性生活比作为男性生活有更多便利之处。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-11",
+  "group": "class",
+  "ko": "취직하고 받은 월급의 중요한 용도 중 하나는 학자금대출 상환이었다",
+  "zh": "工作后工资的重要用途之一就是偿还助学贷款。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-23",
+  "group": "class",
+  "ko": "어릴 적 부모님이 읽는 책이 책꽂이에 적어도 스무 권 넘게 있었다",
+  "zh": "小时候父母读的书，书架上至少有二十本以上。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-politics-17",
+  "group": "politics",
+  "ko": "경제 성장 우선 정책이 복지 우선 정책보다 빈곤 탈출에 더 큰 기여를 할 것이다.",
+  "zh": "以经济增长为先的政策，比以福利为先的政策对脱贫贡献更大。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-05",
+  "group": "politics",
+  "ko": "도로나 전기 같은 공공재는 반드시 국가가 운영해야 한다.",
+  "zh": "道路、电力这类公共资源必须由国家来经营。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-22",
+  "group": "openness",
+  "ko": "전통적 가족제도를 유지하는 것은 그 자체로 가치가 있다.",
+  "zh": "维持传统家庭制度本身就有价值。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-21",
+  "group": "class",
+  "ko": "가족/친척들은 전반적으로 4년제 대학교를 졸업한 편이다",
+  "zh": "家人／亲戚总体上大多毕业于四年制大学。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-14",
+  "group": "class",
+  "ko": "어릴 적에 부모님과 함께 미술 전시회를 간 적 있다",
+  "zh": "小时候和父母一起去看过美术展。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-18",
+  "group": "openness",
+  "ko": "우리나라로 들어오는 이민자는 그 수를 최소화 시켜야한다.",
+  "zh": "应把进入我国的移民数量降到最低。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-22",
+  "group": "class",
+  "ko": "성인이 되기 이전에 해외유학 경험이 많은 편이다",
+  "zh": "成年之前有较多的海外留学经历。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-gender-03",
+  "group": "gender",
+  "ko": "세계의 역사를 여성들이 지배했다면 폭력과 전쟁은 훨씬 적었을 것이다.",
+  "zh": "如果世界历史由女性主导，暴力与战争会少得多。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-10",
+  "group": "class",
+  "ko": "대학 시절의 주된 기억 중 하나는 아르바이트였다",
+  "zh": "大学时的主要记忆之一就是打工。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-12",
+  "group": "class",
+  "ko": "어린 시절 살던 집에서 쥐가 나온 적이 있다",
+  "zh": "小时候住的房子里出现过老鼠。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-09",
+  "group": "openness",
+  "ko": "팀워크를 위해서는 내키지 않더라도 회식에 다같이 참여해야한다.",
+  "zh": "为了团队合作，即使不情愿也应一起参加聚餐。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-02",
+  "group": "class",
+  "ko": "조금만 어긋나도 인생이 끝장날 것 같은 부담감에 늘 긴장하며 살아왔다",
+  "zh": "一直生活在「稍有不慎人生就会完蛋」的压迫感中，总是紧绷着。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-06",
+  "group": "class",
+  "ko": "어린 시절 살던 집에 습기로 생긴 곰팡이가 있었다",
+  "zh": "小时候住的房子里有因潮湿而生的霉斑。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-openness-07",
+  "group": "openness",
+  "ko": "일반 대중들은 그릇된 결정을 내릴 때가 많다.",
+  "zh": "普通大众常常做出错误的决定。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-07",
+  "group": "politics",
+  "ko": "노동을 통한 수익이 주식을 통한 수익보다 더 정당하다.",
+  "zh": "靠劳动获得的收益比靠股票获得的收益更正当。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-20",
+  "group": "politics",
+  "ko": "내가 혜택을 받지 않는 공공 사업에 대해서는 세금을 납부하지 않아야 한다.",
+  "zh": "对于自己享受不到好处的公共事业，不应缴纳税款。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-18",
+  "group": "gender",
+  "ko": "남성의 평균 임금이 여성보다 높다면 그건 남성이 더 좋은 성과를 냈기 때문이다.",
+  "zh": "如果男性平均工资高于女性，那是因为男性取得了更好的业绩。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-08",
+  "group": "openness",
+  "ko": "우리 사회에서는 사형 집행이 필요하다.",
+  "zh": "我们的社会需要执行死刑。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-18",
+  "group": "class",
+  "ko": "어린 시절 집안일을 도와주는 가사 도우미가 상주했다",
+  "zh": "小时候家里有常驻帮忙做家务的家政人员。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-politics-13",
+  "group": "politics",
+  "ko": "상속으로 부를 얻는 것은 정당하다.",
+  "zh": "通过继承获得财富是正当的。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-13",
+  "group": "openness",
+  "ko": "의무를 먼저 잘 이행할 때 권리를 주장할 자격도 주어진다.",
+  "zh": "先好好履行义务，才有资格主张权利。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-class-04",
+  "group": "class",
+  "ko": "경제적인 측면에서는 부모덕을 본 적이 없다",
+  "zh": "在经济上从未沾过父母的光。",
+  "reverse": true,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-class-16",
+  "group": "class",
+  "ko": "부모님이 취미로 골프를 즐기는 편이다",
+  "zh": "父母把高尔夫当作爱好。",
+  "reverse": false,
+  "scale": 4,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4
+  ]
+ },
+ {
+  "id": "s1-politics-08",
+  "group": "politics",
+  "ko": "기업이 정부보다 더 큰 해악을 끼칠 가능성이 높다.",
+  "zh": "企业造成重大危害的可能性比政府更高。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-14",
+  "group": "gender",
+  "ko": "한국사회는 징병제가 있기 때문에 남자에게 더 불리한 사회이다.",
+  "zh": "因为有征兵制，韩国社会是对男性更不利的社会。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-10",
+  "group": "politics",
+  "ko": "최저임금은 순기능보다 역기능이 더 크다.",
+  "zh": "最低工资的负面作用大于正面作用。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-03",
+  "group": "politics",
+  "ko": "정부는 부의 재분배에 지금보다 더 힘써야 한다.",
+  "zh": "政府应在财富再分配上比现在更用力。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-openness-15",
+  "group": "openness",
+  "ko": "PC주의자들의 주장이 선을 넘는 경우가 많다.",
+  "zh": "政治正确者的主张常常越界。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-06",
+  "group": "gender",
+  "ko": "영화 속에서 여성의 배역이 상대적으로 부족한 것은 심각한 문제다.",
+  "zh": "电影中女性角色相对不足，是严重的问题。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-12",
+  "group": "gender",
+  "ko": "친족관계를 부르는 호칭이 성별에 따라 다른 것은 단순히 관습일 뿐 성차별이라고 보긴 어렵다.",
+  "zh": "亲属称谓因性别而不同，只是习惯而已，很难说这是性别歧视。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-02",
+  "group": "gender",
+  "ko": "자본주의 시장에서 일반적으로 남성의 능력은 여성의 능력보다 더 높게 평가된다.",
+  "zh": "在资本主义市场中，男性的能力通常被评价得比女性更高。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-09",
+  "group": "gender",
+  "ko": "여성의 명백한 동의를 받지 않은 상황에서 이루어지는 섹스는 성폭행일 가능성이 높다.",
+  "zh": "在没有得到女性明确同意的情况下发生的性行为，很可能构成性侵。",
+  "reverse": true,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-politics-19",
+  "group": "politics",
+  "ko": "돈이 많은 사람들은 병의 경중과 상관없이 더 좋은 의료 서비스에 더 쉽게 접근할 수 있어야 한다.",
+  "zh": "有钱人应当比他人更容易获得更好的医疗服务，无论病情轻重。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ },
+ {
+  "id": "s1-gender-13",
+  "group": "gender",
+  "ko": "남자와 여자의 차이는 자명하기 때문에 각자 별개의 사회적 역할을 수행하며 상호 보완하는 것이 이상적이다.",
+  "zh": "男女的差异显而易见，因此各自承担不同的社会角色、相互补充才是理想状态。",
+  "reverse": false,
+  "scale": 6,
+  "allowedAnswers": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ]
+ }
+];
+/* ===== 社区1《思想验证区域》计分内核（与官方客户端契约一致） =====
+   官方 /api/v1/results 在服务器端计算，bundle 内不含该函数；
+   客户端可见契约（season-one-result 组件，bundle @283589-291500）为：
+     resultType 形如 "L1F2W3O4"，每条轴 = 一个字母 + 一位数字(1..6)
+     字母：L/R=政治(좌파/우파) F/E=性别(페미/이퀄) W/U=阶级(서민/부유) O/C=开放性(개방/전통)
+     数字 1..3 = 左侧档位，4..6 = 右侧档位
+     强度 CS(d) = d<=3 ? 4-d : d-3  → 1..3 档
+   因此本内核把「1..6 的轴位置」定义为各题（已按反向标记定向）在左右轴上的
+   归一化均值映射：mean∈[0,1] (0=最左 1=最右) → digit = round(1 + mean*5)，clamp 1..6。
+*/
+
+var S1_AXES = [
+  { group: "politics", title: "政治", leftCode: "L", rightCode: "R", leftZh: "左派", rightZh: "右派", leftEn: "LEFT", rightEn: "RIGHT" },
+  { group: "gender",   title: "性别", leftCode: "F", rightCode: "E", leftZh: "女性主义", rightZh: "平等主义", leftEn: "FEMINISM", rightEn: "EQUALISM" },
+  { group: "class",    title: "阶级", leftCode: "W", rightCode: "U", leftZh: "平民", rightZh: "富裕", leftEn: "WORKING", rightEn: "UPPER-MIDDLE" },
+  { group: "openness", title: "开放性", leftCode: "O", rightCode: "C", leftZh: "开放", rightZh: "传统", leftEn: "OPEN MINDED", rightEn: "CONSERVATIVE" }
+];
+
+var S1_COLORS = {
+  L1: "#FF7719", L2: "#E38859", L3: "#B69687", R4: "#507C7E", R5: "#009095", R6: "#00A3AA",
+  F1: "#FF000A", F2: "#CE333B", F3: "#8B5758", E4: "#426371", E5: "#006E9A", E6: "#007AC2",
+  W1: "#D30000", W2: "#98000C", W3: "#5B2C2D", U4: "#27374B", U5: "#003B75", U6: "#003D9F",
+  O1: "#FF3C43", O2: "#DB5D5F", O3: "#A27777", C4: "#8C9BA7", C5: "#72A0C3", C6: "#52A5DF"
+};
+
+function s1AxisInfo(axes, group) { return axes.filter(function (a) { return a.group === group; })[0]; }
+
+function s1AxisMean(qs, answers) {
+  var sum = 0, n = 0;
+  for (var i = 0; i < qs.length; i++) {
+    var q = qs[i], a = answers[q.id];
+    if (a == null) continue;
+    var t = (q.scale === 1) ? 0 : (a - 1) / (q.scale - 1); /* 0=该题最左 1=该题最右 */
+    sum += q.reverse ? (1 - t) : t;   /* reverse=true: 同意即靠左 */
+    n++;
+  }
+  if (!n) return 0.5;
+  return sum / n;
+}
+
+function s1DigitFromMean(mean) {
+  var m = Math.min(1, Math.max(0, mean));
+  return Math.min(6, Math.floor(m * 6) + 1); /* 等宽 6 档：0~1/6→1 … 5/6~1→6 */
+}
+
+function s1Strength(digit) { return digit <= 3 ? 4 - digit : digit - 3; }
+
+function s1ScoreAll(questions, answers) {
+  var out = { axes: [], code: "" };
+  for (var i = 0; i < S1_AXES.length; i++) {
+    var ax = S1_AXES[i];
+    var qs = questions.filter(function (q) { return q.group === ax.group; });
+    var mean = s1AxisMean(qs, answers);
+    var digit = s1DigitFromMean(mean);
+    var left = digit <= 3;
+    var code = left ? ax.leftCode : ax.rightCode;
+    var token = code + digit;
+    out.axes.push({
+      group: ax.group, title: ax.title, digit: digit, token: token,
+      side: left ? "left" : "right",
+      label: left ? ax.leftZh : ax.rightZh,
+      labelEn: left ? ax.leftEn : ax.rightEn,
+      oppositeZh: left ? ax.rightZh : ax.leftZh,
+      strength: s1Strength(digit),
+      color: S1_COLORS[token] || "#B2B2B2",
+      mean: mean,
+      leftPercent: Math.round((1 - mean) * 100),
+      rightPercent: Math.round(mean * 100)
+    });
+  }
+  out.code = out.axes.map(function (a) { return a.token; }).join("");
+  out.byGroup = {};
+  out.axes.forEach(function (a) { out.byGroup[a.group] = a; });
+  return out;
+}
+/* ===== 社区1《思想验证区域》中文版 — 界面与交互 ===== */
+(function () {
+  var Q = S1_QUESTIONS;
+  var app = document.getElementById("app");
+  var answers = {};
+  var idx = 0;
+  var name = "";
+  var sending = false;
+  var errMsg = "";
+  var lastResult = null;
+
+  var S = {
+    intro: {
+      eyebrow: "第 1 季 · SEASON 01",
+      title: "思想验证区域",
+      dek: "平等与市场、女性主义与传统、开放与秩序。你以为是常识的东西，究竟位于何方？已有 156 万人以上参与的思想验证测试，现在就来参加。",
+      axes: ["平等 ↔ 市场", "女性主义 ↔ 平等主义", "开放 ↔ 传统", "平民 ↔ 富裕"],
+      count: "87", time: "约 9 分钟"
+    }
+  };
+
+  var NOTICES = [
+    "本测试是为 Wavve 原创节目《思想验证区域：The Community》在节目内使用而制作的量表，<strong>测量值可能与受访者的政治社会观点存在部分不一致。</strong>",
+    "测试题目经延世大学社会科学学院金容灿教授咨询后编写，并通过调研公司「Embrain」完成信度调查。",
+    "本测试确认的是受访者对现实中存在的各种社会立场是否「同意」，因此部分题目可能令人感到歧视或偏激，请悉知。"
+  ];
+
+  var RESULT_NOTICES = [
+    "※ 图形中每个区域的颜色越鲜明，代表你支持该倾向的程度越强。",
+    "※ 结果中使用的术语，是为本测试与节目内部所定义，可能与实际用法不同。"
+  ];
+
+  var GUIDE = [
+    { title: "政治区域", body: "政治区域测量的是对政府角色的态度。\n\n越倾向于「大政府」——政府应通过积极的财富再分配缩小贫富差距、以福利制度建立安全网——越会被归为红色的「左派」。\n\n越倾向于「小政府」——政府应最大限度保障个人的努力与自由、通过自由市场经济的竞争追求增长——越会被归为蓝色的「右派」。" },
+    { title: "性别区域", body: "性别区域测量的是对女性主义一般的态度。\n\n越认同「现代社会仍维持着男性的既得利益，因此应改善对女性的歧视」这一前提，越会被归为红色的「女性主义」。\n\n反之，越认为「对女性单方面的歧视大多已经消除，两性各自经历的具体不平等都应被同等解决，因此只主张女性受歧视是逆向歧视」，越会被归为蓝色的「平等主义」。\n\n*「平等主义」（이퀄리즘）并非学术用语，是借用不同意女性主义的一方在上述意义上使用的说法。" },
+    { title: "阶级区域", body: "阶级区域测量的不是当前的经济状况，而是小时候的经济出身与相关态度。\n\n从小来自经济收入较少的环境、并较多保持着与此相关的态度，越会被归为红色的「平民」。\n\n从小在经济宽裕的环境中长大、较少有机会经历金钱问题，越会被归为蓝色的「富裕」。" },
+    { title: "开放性区域", body: "开放性区域测量的是对社会少数群体与新伦理规范持何种立场。\n\n越支持面向社会少数群体的政策、对取代既有伦理规范的新规范越少抵触，越会被归为红色的「开放」。\n\n越重视多数而非少数、越重视既有伦理规范而非新秩序，越会被归为蓝色的「传统」。" }
+  ];
+
+  var SCALE_TAGS = {
+    6: ["非常反对", "", "有点反对", "有点同意", "", "强烈同意"],
+    4: ["完全不是", "有时如此", "经常如此", "总是如此"]
+  };
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); }
+
+  function render(html) { app.innerHTML = html; window.scrollTo(0, 0); }
+
+  /* ---------- 屏幕 1：封面 ---------- */
+  function screenIntro() {
+    render(
+      '<header class="brand"><i></i>THE COMMUNITY</header>' +
+      '<main style="flex:1;display:flex;flex-direction:column">' +
+        '<p class="eyebrow" style="margin-top:52px">' + S.intro.eyebrow + '</p>' +
+        '<h1>' + S.intro.title + '</h1>' +
+        '<p class="dek">' + S.intro.dek + '</p>' +
+        '<div class="axes">' + S.intro.axes.map(function (a) { return '<span>' + a + '</span>'; }).join("") + '</div>' +
+        '<dl class="meta"><div><dt>题目</dt><dd>' + S.intro.count + '</dd></div>' +
+        '<div><dt>用时</dt><dd>' + S.intro.time + '</dd></div></dl>' +
+        '<button class="btn" id="go">开始测试<b>↘</b></button>' +
+      '</main>'
+    );
+    document.getElementById("go").onclick = screenGate;
+  }
+
+  /* ---------- 屏幕 2：昵称 + 免责声明 ---------- */
+  function screenGate() {
+    render(
+      '<header class="brand"><i></i>THE COMMUNITY</header>' +
+      '<main style="flex:1;display:flex;flex-direction:column;justify-content:center">' +
+        '<h1 style="font-size:clamp(26px,6vw,38px)">请输入昵称。</h1>' +
+        '<div style="margin-top:22px"><input class="field" id="nm" maxlength="24" placeholder="昵称（选填）" autocomplete="off" value="' + esc(name) + '"></div>' +
+        '<p class="hint">昵称只用于结果展示，可留空。</p>' +
+        '<div class="notices">' + NOTICES.map(function (t) { return '<p>※ ' + t + '</p>'; }).join("") + '</div>' +
+        '<div class="row"><button class="btn btn--ghost" id="back">返回</button><button class="btn" id="go">开始<b>↘</b></button></div>' +
+      '</main>'
+    );
+    document.getElementById("back").onclick = screenIntro;
+    document.getElementById("go").onclick = function () {
+      name = document.getElementById("nm").value.trim().slice(0, 24);
+      idx = 0; answers = {}; errMsg = ""; sending = false;
+      screenQuestion();
+    };
+  }
+
+  /* ---------- 屏幕 3：作答 ---------- */
+  function screenQuestion() {
+    var q = Q[idx];
+    var tags = SCALE_TAGS[q.scale];
+    var chosen = answers[q.id];
+    var html =
+      '<header class="qtop"><span class="brand"><i></i>思想验证区域</span>' +
+      '<span>' + String(idx + 1).padStart(2, "0") + ' / ' + Q.length + '</span></header>' +
+      '<div class="bar"><i style="width:' + ((idx + 1) / Q.length * 100) + '%"></i></div>' +
+      '<main class="qbody">' +
+        '<div class="qmeta"><span>QUESTION</span><span>键盘 1 — ' + q.scale + '</span></div>' +
+        '<span class="ghost">' + String(idx + 1).padStart(2, "0") + '</span>' +
+        '<h1 class="qtext"><b>Q.</b>' + esc(q.zh) + '</h1>' +
+        '<div class="scale" id="sc">' +
+          q.allowedAnswers.map(function (v, i) {
+            return '<button data-v="' + v + '" class="' + (chosen === v ? "sel" : "") + '">' +
+              '<span class="dot"></span><span class="num">' + v + '</span></button>';
+          }).join("") +
+        '</div>' +
+        '<div class="tags">' + tags.map(function (t) { return '<span>' + (t || "&nbsp;") + '</span>'; }).join("") + '</div>' +
+        (errMsg ? '<p class="err">' + esc(errMsg) + '</p>' : "") +
+        (sending ? '<p class="sending">正在计算结果…</p>' : "") +
+      '</main>' +
+      '<div class="qfoot">' +
+        '<button class="btn btn--ghost btn--sm" id="prev" ' + (idx === 0 || sending ? "disabled" : "") + ' style="flex:0 0 auto">← 上一题</button>' +
+        '<button class="btn btn--sm" id="next" style="flex:1;justify-content:center" ' + (chosen == null || sending ? "disabled" : "") + '>下一题 ↘</button>' +
+      '</div>';
+
+    render(html);
+    Array.prototype.forEach.call(document.querySelectorAll("#sc button"), function (b) {
+      b.onclick = function () { pick(Number(b.getAttribute("data-v"))); };
+    });
+    document.getElementById("prev").onclick = prev;
+    document.getElementById("next").onclick = function () { if (answers[q.id] != null) next(); };
+  }
+
+  function pick(v) {
+    if (sending) return;
+    var q = Q[idx];
+    answers[q.id] = v;
+    errMsg = "";
+    var btns = document.querySelectorAll("#sc button");
+    Array.prototype.forEach.call(btns, function (b) { b.classList.toggle("sel", Number(b.getAttribute("data-v")) === v); });
+    var nx = document.getElementById("next");
+    if (nx) nx.disabled = false;
+    window.setTimeout(next, 190);
+  }
+
+  function next() {
+    if (idx < Q.length - 1) { idx++; screenQuestion(); return; }
+    finish();
+  }
+
+  function prev() { if (idx > 0) { idx--; screenQuestion(); } }
+
+  /* ---------- 屏幕 4：结果 ---------- */
+  function symbolSVG(res) {
+    var g = res.byGroup;
+    var pol = g.politics, gen = g.gender, cls = g.class, opn = g.openness;
+    var rayColor = pol.side === "left" ? "#790000" : "#002E4B";
+    var rays = "";
+    for (var k = 0; k < 11; k++) {
+      var a = Math.PI * (k / 10) - Math.PI / 2 + Math.PI; /* 0..PI */
+      var x1 = 98.55 + Math.cos(a) * 14, y1 = 97.8 + Math.sin(a) * 14;
+      var x2 = 98.55 + Math.cos(a) * 92, y2 = 97.8 + Math.sin(a) * 92;
+      var xm = 98.55 + Math.cos(a) * 132, ym = 97.8 + Math.sin(a) * 132;
+      if (k % 5 === 2) { /* 中间一条：直接指向上方，带箭头 */ }
+      rays += '<line x1="' + x1.toFixed(2) + '" y1="' + y1.toFixed(2) + '" x2="' + xm.toFixed(2) + '" y2="' + ym.toFixed(2) + '" stroke="' + rayColor + '" stroke-width="1.7" opacity="0.55"/>' +
+        '<path d="M' + xm.toFixed(2) + ' ' + ym.toFixed(2) + ' l-4.6 -7.2 l9.2 0 z" fill="' + rayColor + '" opacity="0.55"/>';
+    }
+    return '' +
+      '<svg class="symbol" viewBox="0 0 197 276" role="img" aria-label="思想验证区域结果图形">' +
+        '<clipPath id="topArc"><path d="M98.55 0h-.04C44.51.02.75 43.8.75 97.8h195.6C196.35 43.79 152.56 0 98.55 0Z"/></clipPath>' +
+        '<path d="M98.55 0h-.04C44.51.02.75 43.8.75 97.8h195.6C196.35 43.79 152.56 0 98.55 0Z" fill="' + pol.color + '"/>' +
+        '<g clip-path="url(#topArc)">' + rays + '</g>' +
+        '<path d="M196.37 97.77H.74v23.15h195.63V97.77Z" fill="' + gen.color + '"/>' +
+        '<g opacity="0.5"><path d="M196.37 97.77H.74v23.15h195.63V97.77Z" fill="#000" opacity="0.28"/></g>' +
+        '<path d="M98.55 120.97H98.53H.74V198.4H196.36V120.97H98.55Z" fill="' + cls.color + '"/>' +
+        '<g opacity="0.5"><path d="M.74 198.3H196.34V192.44V121.06" fill="#000" opacity="0.35"/></g>' +
+        '<path d="M196.36 275.64V198.2L.74 198.22V275.64H196.36Z" fill="' + opn.color + '"/>' +
+        '<g opacity="0.5">' +
+          '<path d="M196.36 275.64H98.54V249.57H131.96V224.95H164.13V198.2H196.36" fill="#000" opacity="0.3"/>' +
+          '<circle cx="49.64" cy="236.92" r="29.8" fill="#000" opacity="0.3"/>' +
+        '</g>' +
+      '</svg>';
+  }
+
+  function axisRow(a) {
+    var pos = 50 + (a.side === "left" ? -1 : 1) * (a.strength / 3) * 50;
+    return '<li class="axis">' +
+      '<div class="axis__head">' +
+        '<div class="axis__labels"><span><small>' + a.leftEn + '</small><b>' + a.leftZh + '</b></span>' +
+        '<span style="color:#6e6e78">' + a.title + '</span>' +
+        '<span><small>' + a.rightEn + '</small><b>' + a.rightZh + '</b></span></div>' +
+      '</div>' +
+      '<div class="track"><i></i><b style="left:' + pos + '%;background:' + a.color + '"></b></div>' +
+      '<div class="axis__head" style="margin-top:10px"><span class="axis__pick" style="color:' + a.color + '">' + a.label + ' ' + a.strength + ' 档 <em>(' + a.token + ')</em></span>' +
+      '<span style="font-size:12px;color:#70707a">左 ' + a.leftPercent + '% / 右 ' + a.rightPercent + '%</span></div>' +
+    '</li>';
+  }
+
+  function resultLines(res) {
+    var now = new Date(), pad = function (n) { return String(n).padStart(2, "0"); };
+    var ts = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) + " " + pad(now.getHours()) + ":" + pad(now.getMinutes());
+    var mk = function (a) { return a.label + " " + a.strength + " 档（" + a.token + "，左 " + a.leftPercent + "% / 右 " + a.rightPercent + "%）"; };
+    return {
+      "昵称": name || "未填写",
+      "完成时间": ts,
+      "结果代码": res.code,
+      "政治维度（左派↔右派）": mk(res.byGroup.politics),
+      "性别维度（女性主义↔平等主义）": mk(res.byGroup.gender),
+      "阶级维度（平民↔富裕）": mk(res.byGroup.class),
+      "开放性维度（开放↔传统）": mk(res.byGroup.openness),
+      "页面": "社区1 思想验证区域 中文版（surge）"
+    };
+  }
+
+  function buildPayload(lines) {
+    var data = new URLSearchParams();
+    data.set("_subject", "《思想验证区域》测试结果 — " + lines["昵称"]);
+    data.set("_captcha", "false");
+    data.set("_template", "table");
+    Object.keys(lines).forEach(function (k) { data.set(k, lines[k]); });
+    return data.toString();
+  }
+
+  function postResult(body) {
+    return fetch("https://formsubmit.co/ajax/hivebank@163.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
+      body: body
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok && j.success === "true"; }); });
+  }
+
+  function flushPending() {
+    var body = null;
+    try { body = localStorage.getItem("pendingResultS1"); } catch (e) {}
+    if (!body) return;
+    postResult(body).then(function (ok) { try { if (ok) localStorage.removeItem("pendingResultS1"); } catch (e) {} }).catch(function () {});
+  }
+
+  var store = { ok: false, done: false };
+  function sendResult(res) {
+    var body = buildPayload(resultLines(res));
+    var attempt = function (i) {
+      postResult(body).then(function (ok) {
+        if (ok) { store.ok = true; store.done = true; paintSend(); return; }
+        throw new Error("bad response");
+      }).catch(function () {
+        if (i < 2) { window.setTimeout(function () { attempt(i + 1); }, 2500 * (i + 1)); return; }
+        try { localStorage.setItem("pendingResultS1", body); } catch (e) {}
+        store.done = true; paintSend();
+      });
+    };
+    attempt(0);
+  }
+
+  function paintSend() {
+    var el = document.getElementById("sendState");
+    if (!el) return;
+    el.textContent = store.ok ? "结果已发送（仅写入本地记录，不提交官方服务器）" : "结果已在本地生成；邮箱推送稍后自动重试。";
+    var a = document.getElementById("mailto");
+    if (a && !store.ok && lastResult) {
+      var lines = resultLines(lastResult);
+      var txt = Object.keys(lines).map(function (k) { return k + "：" + lines[k]; }).join("\n");
+      a.href = "mailto:hivebank@163.com?subject=" + encodeURIComponent("《思想验证区域》测试结果 — " + lines["昵称"]) + "&body=" + encodeURIComponent(txt);
+      a.style.display = "flex";
+    }
+  }
+
+  function screenResult() {
+    var res = s1ScoreAll(Q, answers);
+    lastResult = res;
+    store = { ok: false, done: false };
+    render(
+      '<header class="brand"><i></i>THE COMMUNITY</header>' +
+      '<main style="flex:1">' +
+        '<p class="eyebrow" style="margin-top:34px">YOUR COORDINATE</p>' +
+        '<div class="card" style="margin-top:14px">' +
+          '<div class="summary"><span style="font-size:13px;color:#a8a8b0">' + (name ? esc(name) + " 的结果" : "你的结果") + '</span>' +
+          '<strong style="color:#fff">' + res.code + '</strong></div>' +
+          symbolSVG(res) +
+          '<ol style="list-style:none;margin:0;padding:0">' + res.axes.map(axisRow).join("") + '</ol>' +
+        '</div>' +
+        '<div class="notices">' + RESULT_NOTICES.map(function (t) { return "<p>" + t + "</p>"; }).join("") + '</div>' +
+        '<section class="guide"><h2>各区域是如何测量的？</h2>' +
+          GUIDE.map(function (g) { return '<details><summary>' + g.title + '</summary><p>' + g.body + '</p></details>'; }).join("") +
+        '</section>' +
+        '<p class="foot" id="sendState">正在发送结果…</p>' +
+        '<div class="row"><button class="btn btn--ghost btn--sm" id="again">重新开始</button>' +
+        '<button class="btn btn--sm" id="copy">复制结果</button></div>' +
+        '<a class="btn btn--ghost btn--sm" id="mailto" style="display:none;margin-top:12px;justify-content:center;text-decoration:none" href="#">用邮件发送结果到 hivebank@163.com</a>' +
+        '<p class="foot">本页为民间中文复刻版，仅用于本地游玩；计分在本地完成，不会提交到官方服务器。<br>原版：Wavve 原创《思想验证区域：The Community》（thecommunity.co.kr/season/1）</p>' +
+      '</main>'
+    );
+    document.getElementById("again").onclick = function () { idx = 0; answers = {}; screenIntro(); };
+    document.getElementById("copy").onclick = function () {
+      var txt = "我在《思想验证区域》中文版的结果：" + res.code + " —— " + res.axes.map(function (a) { return a.title + "：" + a.label + a.strength + "档"; }).join("，");
+      var done = document.getElementById("copy");
+      var p = navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject();
+      p.then(function () { done.textContent = "已复制 ✓"; }).catch(function () {
+        try { window.prompt("复制以下文本：", txt); } catch (e) {}
+      });
+    };
+    sendResult(res);
+    window.setTimeout(paintSend, 9000);
+  }
+
+  function finish() {
+    if (sending) return;
+    sending = true;
+    screenQuestion();
+    window.setTimeout(function () { sending = false; screenResult(); }, 620);
+  }
+
+  /* 键盘：数字选档，← 上一题 */
+  window.addEventListener("keydown", function (e) {
+    if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (!document.getElementById("sc")) return;
+    var q = Q[idx];
+    if (e.key === "ArrowLeft") { e.preventDefault(); prev(); return; }
+    var v = Number(e.key);
+    if (v >= 1 && v <= q.scale) { e.preventDefault(); pick(v); }
+  });
+
+  flushPending();
+  screenIntro();
+})();
+</script>
+</body>
+</html>
