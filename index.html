@@ -52,9 +52,15 @@ h1{font-size:clamp(30px,7.6vw,52px);line-height:1.06;margin:16px 0 0;letter-spac
 .qtext b{color:var(--dim);font-weight:800;margin-right:6px}
 .scale{display:flex;gap:8px;margin:38px 0 0}
 .scale button{flex:1;background:#131315;border:1px solid var(--line);border-radius:12px;padding:14px 0 12px;cursor:pointer;
-  display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .1s ease,border-color .15s ease}
-.scale button:hover{transform:translateY(-3px);border-color:#454550}
-.scale button.sel{border-color:#fff;background:#1c1c20}
+  display:flex;flex-direction:column;align-items:center;gap:8px;transition:transform .12s ease,border-color .15s ease,background .15s ease,box-shadow .15s ease}
+.scale button .num{transition:color .15s ease}
+.scale button .dot{transition:background .15s ease}
+.scale button:hover{transform:translateY(-4px) scale(1.05);border-color:#fff;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.scale button:hover .num{color:#111}
+.scale button:hover .dot{background:#111}
+.scale button.sel{border-color:#fff;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.28)}
+.scale button.sel .num{color:#111}
+.scale button.sel .dot{background:#111}
 .scale .dot{width:16px;height:16px;border-radius:50%;background:#3a3a42}
 .scale .num{font-size:13px;font-weight:700;color:#c4c4cc}
 .tags{display:flex;gap:8px;margin:9px 0 0;font-size:11.5px;color:var(--dim)}
@@ -1609,7 +1615,7 @@ function s1ScoreAll(questions, answers) {
   ];
 
   var SCALE_TAGS = {
-    6: ["非常反对", "", "有点反对", "有点同意", "", "强烈同意"],
+    6: ["非常反对", "反对", "有点反对", "有点同意", "同意", "强烈同意"],
     4: ["完全不是", "有时如此", "经常如此", "总是如此"]
   };
 
