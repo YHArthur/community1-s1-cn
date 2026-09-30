@@ -27,8 +27,6 @@ button,input{font:inherit;color:inherit}
 .eyebrow{font-size:12px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase}
 h1{font-size:clamp(30px,7.6vw,52px);line-height:1.06;margin:16px 0 0;letter-spacing:-.01em}
 .dek{color:#c9c9d0;font-size:15.5px;line-height:1.75;margin:18px 0 0;max-width:34em}
-.axes{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}
-.axes span{border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:13px;color:#dcdce2}
 .meta{display:flex;gap:34px;margin:26px 0 0}
 .meta dt{font-size:12px;letter-spacing:.14em;color:var(--dim);margin-bottom:4px}
 .meta dd{margin:0;font-size:26px;font-weight:800}
@@ -116,6 +114,24 @@ details p{color:#b6b6be;font-size:13.4px;line-height:1.85;white-space:pre-line;m
 .rcard__total span{font-size:12px;letter-spacing:.22em;color:var(--dim)}
 .rcard__total strong{font-size:30px;line-height:1;letter-spacing:.04em}
 .rcard__total em{font-style:normal;font-size:12px;color:#70707a}
+/* ===== 白底结果卡 + 横向柱状图（v3） ===== */
+.rcard{background:#fff;border-color:#e6e7ec;color:#111}
+.rcard__name{color:#6b6b74}
+.rcard__code{color:#111}
+.rcard__sub{color:#9a9aa2}
+.rcard__axis{border-top-color:#edeef2}
+.rcard .side{color:#8a8a93}
+.rcard .side small{color:#b3b3bb}
+.rcard .axname{color:#8a8a93}
+.rcard .chip{border-color:#e6e7ec}
+.rcard__total{border-top-color:#edeef2}
+.rcard__total span{color:#8a8a93}
+.rcard__total em{color:#9a9aa2}
+.bbar{display:flex;height:22px;margin-top:12px;border-radius:6px;overflow:hidden;background:#f2f2f5}
+.bbar i{display:block;height:100%}
+.brow{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:8px;font-size:12px;color:#6f6f78}
+.bnum{font-weight:800;color:#111;font-variant-numeric:tabular-nums}
+.bmid{font-weight:800;color:#111;font-size:12.5px}
 @media(max-width:520px){.axis__labels{gap:10px}.track b{width:16px;height:16px;top:-5px}}
 </style>
 </head>
@@ -1570,7 +1586,6 @@ function s1ScoreAll(questions, answers) {
       eyebrow: "第 1 季 · SEASON 01",
       title: "思想验证区域",
       dek: "平等与市场、女性主义与传统、开放与秩序。你以为是常识的东西，究竟位于何方？已有 156 万人以上参与的思想验证测试，现在就来参加。",
-      axes: ["平等 ↔ 市场", "女性主义 ↔ 平等主义", "开放 ↔ 传统", "平民 ↔ 富裕"],
       count: "87", time: "约 9 分钟"
     }
   };
@@ -1610,7 +1625,6 @@ function s1ScoreAll(questions, answers) {
         '<p class="eyebrow" style="margin-top:52px">' + S.intro.eyebrow + '</p>' +
         '<h1>' + S.intro.title + '</h1>' +
         '<p class="dek">' + S.intro.dek + '</p>' +
-        '<div class="axes">' + S.intro.axes.map(function (a) { return '<span>' + a + '</span>'; }).join("") + '</div>' +
         '<dl class="meta"><div><dt>题目</dt><dd>' + S.intro.count + '</dd></div>' +
         '<div><dt>用时</dt><dd>' + S.intro.time + '</dd></div></dl>' +
         '<button class="btn" id="go">开始测试<b>↘</b></button>' +
@@ -1706,7 +1720,6 @@ function s1ScoreAll(questions, answers) {
   }
 
   function axisRow(a) {
-    var pos = 50 + (a.side === "left" ? -1 : 1) * (a.level / 3) * 47;
     var on = function (side) { return a.side === side ? " side--on" : ""; };
     var onColor = a.side === "left" ? "left" : "right";
     return '<li class="rcard__axis">' +
@@ -1715,10 +1728,14 @@ function s1ScoreAll(questions, answers) {
         '<em class="axname">' + a.title + '</em>' +
         '<span class="side side--r" style="' + (onColor === "right" ? "color:" + a.color : "") + '"><small>' + a.rightEn + '</small><b class="' + (onColor === "right" ? "on" : "") + '">' + a.rightZh + '</b></span>' +
       '</div>' +
-      '<div class="track"><i></i><b style="left:' + pos.toFixed(1) + '%;background:' + a.color + '"></b></div>' +
-      '<div class="axfoot">' +
-        '<span class="chip" style="border-color:' + a.color + ';color:' + a.color + '">' + a.label + ' · ' + a.level + ' 级</span>' +
-        '<span class="lv" style="color:' + a.color + '">' + a.token + '<em>L' + a.level + '</em></span>' +
+      '<div class="bbar">' +
+        '<i style="width:' + a.leftPercent + '%;background:' + (a.side === "left" ? a.color : "#e3e4ea") + '"></i>' +
+        '<i style="width:' + a.rightPercent + '%;background:' + (a.side === "right" ? a.color : "#e3e4ea") + '"></i>' +
+      '</div>' +
+      '<div class="brow">' +
+        '<span class="bnum">' + a.leftPercent + '% <em style="font-style:normal;color:#8a8a93">' + a.leftZh + '</em></span>' +
+        '<span class="bmid" style="color:' + a.color + '">' + a.level + ' 级</span>' +
+        '<span class="bnum">' + a.rightPercent + '% <em style="font-style:normal;color:#8a8a93">' + a.rightZh + '</em></span>' +
       '</div>' +
     '</li>';
   }
@@ -1742,63 +1759,9 @@ function s1ScoreAll(questions, answers) {
     };
   }
 
-  function buildPayload(lines) {
-    var data = new URLSearchParams();
-    data.set("_subject", "《思想验证区域》测试结果 — " + lines["昵称"]);
-    data.set("_captcha", "false");
-    data.set("_template", "table");
-    Object.keys(lines).forEach(function (k) { data.set(k, lines[k]); });
-    return data.toString();
-  }
-
-  function postResult(body) {
-    return fetch("https://formsubmit.co/ajax/hivebank@163.com", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
-      body: body
-    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok && j.success === "true"; }); });
-  }
-
-  function flushPending() {
-    var body = null;
-    try { body = localStorage.getItem("pendingResultS1"); } catch (e) {}
-    if (!body) return;
-    postResult(body).then(function (ok) { try { if (ok) localStorage.removeItem("pendingResultS1"); } catch (e) {} }).catch(function () {});
-  }
-
-  var store = { ok: false, done: false };
-  function sendResult(res) {
-    var body = buildPayload(resultLines(res));
-    var attempt = function (i) {
-      postResult(body).then(function (ok) {
-        if (ok) { store.ok = true; store.done = true; paintSend(); return; }
-        throw new Error("bad response");
-      }).catch(function () {
-        if (i < 2) { window.setTimeout(function () { attempt(i + 1); }, 2500 * (i + 1)); return; }
-        try { localStorage.setItem("pendingResultS1", body); } catch (e) {}
-        store.done = true; paintSend();
-      });
-    };
-    attempt(0);
-  }
-
-  function paintSend() {
-    var el = document.getElementById("sendState");
-    if (!el) return;
-    el.textContent = store.ok ? "结果已发送（仅写入本地记录，不提交官方服务器）" : "结果已在本地生成；邮箱推送稍后自动重试。";
-    var a = document.getElementById("mailto");
-    if (a && !store.ok && lastResult) {
-      var lines = resultLines(lastResult);
-      var txt = Object.keys(lines).map(function (k) { return k + "：" + lines[k]; }).join("\n");
-      a.href = "mailto:hivebank@163.com?subject=" + encodeURIComponent("《思想验证区域》测试结果 — " + lines["昵称"]) + "&body=" + encodeURIComponent(txt);
-      a.style.display = "flex";
-    }
-  }
-
   function screenResult() {
     var res = s1ScoreAll(Q, answers);
     lastResult = res;
-    store = { ok: false, done: false };
     render(
       '<header class="brand"><i></i>THE COMMUNITY</header>' +
       '<main style="flex:1">' +
@@ -1821,10 +1784,8 @@ function s1ScoreAll(questions, answers) {
         '<section class="guide"><h2>各区域是如何测量的？</h2>' +
           GUIDE.map(function (g) { return '<details><summary>' + g.title + '</summary><p>' + g.body + '</p></details>'; }).join("") +
         '</section>' +
-        '<p class="foot" id="sendState">正在发送结果…</p>' +
         '<div class="row"><button class="btn btn--ghost btn--sm" id="again">重新开始</button>' +
         '<button class="btn btn--sm" id="copy">复制结果</button></div>' +
-        '<a class="btn btn--ghost btn--sm" id="mailto" style="display:none;margin-top:12px;justify-content:center;text-decoration:none" href="#">用邮件发送结果到 hivebank@163.com</a>' +
         '<p class="foot">本页为民间中文复刻版，仅用于本地游玩；计分在本地完成，不会提交到官方服务器。<br>原版：Wavve 原创《思想验证区域：The Community》（thecommunity.co.kr/season/1）</p>' +
       '</main>'
     );
@@ -1837,8 +1798,6 @@ function s1ScoreAll(questions, answers) {
         try { window.prompt("复制以下文本：", txt); } catch (e) {}
       });
     };
-    sendResult(res);
-    window.setTimeout(paintSend, 9000);
   }
 
   function finish() {
@@ -1858,7 +1817,6 @@ function s1ScoreAll(questions, answers) {
     if (v >= 1 && v <= q.scale) { e.preventDefault(); pick(v); }
   });
 
-  flushPending();
   screenIntro();
 })();
 </script>
